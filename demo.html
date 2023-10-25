@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<title>Browser Window web component</title>
+		<style>
+		.demo-layout {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 3em 2em;
+			margin: 2em 0;
+		}
+		.demo-layout > * {
+			flex-grow: 1;
+			flex-basis: 20em;
+		}
+		</style>
+		<script src="./browser-window.js"></script>
+	</head>
+	<body>
+		<header>
+			<h1>Browser Window component</h1>
+		</header>
+		<main>
+			<p>Used in demos as a way to fake a Safari-esque web browser window.</p>
+			<div class="demo-layout">
+				<browser-window>
+					This is a test.
+				</browser-window>
+				<browser-window shadow>
+					This one has a big ’ol shadow.
+				</browser-window>
+				<browser-window flush>
+					<div style="background: #eee; padding: .5em;">This content is flush to the window</div>
+				</browser-window>
+				<browser-window grayscale>
+					This one has grayscale buttons.
+				</browser-window>
+				<browser-window url="https://www.zachleat.com/">
+					This one has a URL bar.
+				</browser-window>
+				<browser-window url="http://example.com/" iframe>
+					This one has an iframe.
+				</browser-window>
+			</div>
+		</main>
+	</body>
+</html>

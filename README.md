@@ -6,7 +6,7 @@ A small structural-only zero-dependency Web Component for demos with a fake brow
 
 ## Installation
 
-Via `npm` or download [`browser-window.js`](./browser-window.js) directly for use in your project.
+Via [`npm`](https://www.npmjs.com/package/@zachleat/browser-window) or download [`browser-window.js`](./browser-window.js) directly for use in your project.
 
 ```sh
 npm install @zachleat/browser-window

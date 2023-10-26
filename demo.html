@@ -16,6 +16,10 @@
 			flex-grow: 1;
 			flex-basis: 20em;
 		}
+		browser-window {
+			margin: 0 auto;
+			max-width: 40em;
+		}
 		</style>
 		<script src="./browser-window.js"></script>
 	</head>
@@ -44,7 +48,7 @@
 				<browser-window url="https://www.zachleat.com/web/" icon>
 					This one has a URL bar with icon.
 				</browser-window>
-				<browser-window url="https://example.com/" iframe>
+				<browser-window url="https://example.com/" iframe style="--browser-window-height: 200px">
 					This one has an iframe.
 				</browser-window>
 			</div>

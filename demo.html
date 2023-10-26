@@ -16,9 +16,12 @@
 			flex-grow: 1;
 			flex-basis: 20em;
 		}
-		browser-window {
-			margin: 0 auto;
-			max-width: 40em;
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+		p:first-child {
+			margin-top: 0;
 		}
 		</style>
 		<script src="./browser-window.js"></script>
@@ -48,9 +51,18 @@
 				<browser-window url="https://www.zachleat.com/web/" icon>
 					This one has a URL bar with icon.
 				</browser-window>
-				<browser-window url="https://example.com/" iframe style="--browser-window-height: 200px">
-					This one has an iframe.
-				</browser-window>
+				<div>
+					<p>This one has an image screenshot.</p>
+					<browser-window url="https://resizeasaurus.zachleat.dev/demo.html" flush>
+						<img src="https://v1.screenshot.11ty.dev/https%3A%2F%2Fresizeasaurus.zachleat.dev%2Fdemo.html/opengraph/" alt="resizeasaurus Web Component Demo screenshot" width="1200" height="630" loading="lazy" decoding="async">
+					</browser-window>
+				</div>
+				<div>
+					<p>This one has an iframe.</p>
+					<browser-window url="https://example.com/" flush>
+						<iframe src="https://example.com/" style="width: 100%; height: 200px; border: none"></iframe>
+					</browser-window>
+				</div>
 			</div>
 		</main>
 	</body>

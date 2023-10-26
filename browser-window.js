@@ -4,7 +4,6 @@ class BrowserWindow extends HTMLElement {
 	static attrs = {
 		url: "url",
 		icon: "icon",
-		iframe: "iframe",
 		flush: "flush",
 		shadow: "shadow",
 		grayscale: "grayscale",
@@ -53,9 +52,14 @@ class BrowserWindow extends HTMLElement {
 .main {
 	padding: .5em;
 }
-:host([${BrowserWindow.attrs.flush}]) .main,
-:host([${BrowserWindow.attrs.iframe}]) .main {
+:host([${BrowserWindow.attrs.flush}]) .main {
 	padding: 0;
+	border-radius: 0 0 .5em .5em;
+	overflow: hidden;
+}
+:host([${BrowserWindow.attrs.flush}]) .main > ::slotted(img:only-child),
+:host([${BrowserWindow.attrs.flush}]) .main > ::slotted(iframe:only-child) {
+	display: flex;
 }
 .title {
 	display: flex;
@@ -89,16 +93,6 @@ class BrowserWindow extends HTMLElement {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-:host([${BrowserWindow.attrs.iframe}]) .main {
-	display: flex;
-}
-.window-iframe {
-	width: 100%;
-	height: var(--browser-window-height, 200px);
-	border: 0;
-	border-radius: 0 0 .5em .5em;
-	overflow: hidden;
-}
 `;
 
 	connectedCallback() {
@@ -116,24 +110,22 @@ class BrowserWindow extends HTMLElement {
 		let urlObj = url ? new URL(url) : {};
 		let displayUrl = urlObj.hostname || "";
 
-		let contentHtml = "<slot></slot>";
-		if(this.hasAttribute(BrowserWindow.attrs.iframe)) {
-			contentHtml = `<iframe class="window-iframe" src="${url || "data:text/html;charset=utf-8,"}"></iframe>`;
+		let template = document.createElement("template");
+
+		let iconHtml = "";
+		if(this.hasAttribute(BrowserWindow.attrs.icon)) {
+			let iconUrl = `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(urlObj.origin || "")}/`;
+			iconHtml = `<img src="${iconUrl}" alt="Favicon for ${urlObj.origin}" class="title-icon" width="32" height="32" loading="lazy" decoding="async">`
 		}
 
-		let template = document.createElement("template");
-		let useIcon = this.hasAttribute(BrowserWindow.attrs.icon);
-		let iconUrl = `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(urlObj.origin || "")}/`;
 		template.innerHTML = `<div class="window">
 		<div class="hed">
 			<div class="circle circle-red"></div>
 			<div class="circle circle-yellow"></div>
 			<div class="circle circle-green"></div>
-			${url ? `<a href="${url}" class="title">${useIcon ? `<img src="${iconUrl}" alt="Favicon for ${urlObj.origin}" class="title-icon">` : ""}<span class="title-text">${displayUrl}</span></a>` : ""}
+			${url ? `<a href="${url}" class="title">${iconHtml}<span class="title-text">${displayUrl}</span></a>` : ""}
 		</div>
-		<div class="main">
-			${contentHtml}
-		</div>
+		<div class="main"><slot></slot></div>
 	</div>`;
 
 		shadowroot.appendChild(template.content.cloneNode(true));

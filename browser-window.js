@@ -98,7 +98,7 @@ class BrowserWindow extends HTMLElement {
 `;
 
 	connectedCallback() {
-		if(!("replaceSync" in CSSStyleSheet.prototype)) {
+		if(!("replaceSync" in CSSStyleSheet.prototype) || this.shadowRoot) {
 			return;
 		}
 

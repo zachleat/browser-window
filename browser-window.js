@@ -10,8 +10,10 @@ class BrowserWindow extends HTMLElement {
 	};
 
 	static style = `
+:host {
+	--bw-shadow-hsl: 0deg 0% 75%;
+}
 .window {
-	--bw-shadow-color: 0deg 0% 75%;
 	display: flex;
 	flex-direction: column;
 	min-width: 100px;
@@ -20,12 +22,12 @@ class BrowserWindow extends HTMLElement {
 }
 :host([${BrowserWindow.attrs.shadow}]) .window {
 	/* via https://www.joshwcomeau.com/shadow-palette/ */
-	box-shadow: 0px 0.3px 0.5px hsl(var(--bw-shadow-color) / 0),
-		0.1px 2.4px 3.6px hsl(var(--bw-shadow-color) / 0.07),
-		0.1px 4.3px 6.5px hsl(var(--bw-shadow-color) / 0.14),
-		0.2px 6.7px 10.1px hsl(var(--bw-shadow-color) / 0.22),
-		0.3px 10.6px 15.9px hsl(var(--bw-shadow-color) / 0.29),
-		0.5px 16.5px 24.8px hsl(var(--bw-shadow-color) / 0.36);
+	box-shadow: 0px 0.3px 0.5px hsl(var(--bw-shadow-hsl) / 0),
+		0.1px 2.4px 3.6px hsl(var(--bw-shadow-hsl) / 0.07),
+		0.1px 4.3px 6.5px hsl(var(--bw-shadow-hsl) / 0.14),
+		0.2px 6.7px 10.1px hsl(var(--bw-shadow-hsl) / 0.22),
+		0.3px 10.6px 15.9px hsl(var(--bw-shadow-hsl) / 0.29),
+		0.5px 16.5px 24.8px hsl(var(--bw-shadow-hsl) / 0.36);
 }
 .hed {
 	display: flex;

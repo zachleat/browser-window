@@ -3,6 +3,7 @@ class BrowserWindow extends HTMLElement {
 
 	static attrs = {
 		url: "url",
+		icon: "icon",
 		iframe: "iframe",
 		flush: "flush",
 		shadow: "shadow",
@@ -112,7 +113,8 @@ class BrowserWindow extends HTMLElement {
 		shadowroot.adoptedStyleSheets = [sheet];
 
 		let url = this.getAttribute(BrowserWindow.attrs.url) || "";
-		let displayUrl = url ? (new URL(url)).hostname : "";
+		let urlObj = url ? new URL(url) : {};
+		let displayUrl = urlObj.hostname || "";
 
 		let contentHtml = "<slot></slot>";
 		if(this.hasAttribute(BrowserWindow.attrs.iframe)) {
@@ -120,13 +122,14 @@ class BrowserWindow extends HTMLElement {
 		}
 
 		let template = document.createElement("template");
-		let iconUrl = `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(url)}/`;
+		let useIcon = this.hasAttribute(BrowserWindow.attrs.icon);
+		let iconUrl = `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(urlObj.origin || "")}/`;
 		template.innerHTML = `<div class="window">
 		<div class="hed">
 			<div class="circle circle-red"></div>
 			<div class="circle circle-yellow"></div>
 			<div class="circle circle-green"></div>
-			${url ? `<a href="${url}" class="title"><img src="${iconUrl}" class="title-icon"><span class="title-text">${displayUrl}</span></a>` : ""}
+			${url ? `<a href="${url}" class="title">${useIcon ? `<img src="${iconUrl}" alt="Favicon for ${urlObj.origin}" class="title-icon">` : ""}<span class="title-text">${displayUrl}</span></a>` : ""}
 		</div>
 		<div class="main">
 			${contentHtml}

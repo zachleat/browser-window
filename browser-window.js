@@ -1,15 +1,16 @@
 class BrowserWindow extends HTMLElement {
-	static tagName = "browser-window";
+  static tagName = "browser-window";
 
-	static attrs = {
-		url: "url",
-		icon: "icon",
-		flush: "flush",
-		shadow: "shadow",
-		grayscale: "grayscale",
-	};
+  static attrs = {
+    url: "url",
+    icon: "icon",
+    flush: "flush",
+    shadow: "shadow",
+    grayscale: "grayscale",
+    os: "os",
+  };
 
-	static style = `
+  static style = `
 :host {
 	--bw-shadow-hsl: 0deg 0% 75%;
 }
@@ -34,6 +35,9 @@ class BrowserWindow extends HTMLElement {
 	gap: 6px;
 	padding: 9px;
 }
+.hed.windows {
+	flex-direction: row-reverse;
+}
 .circle {
 	display: inline-block;
 	height: 12px;
@@ -41,6 +45,12 @@ class BrowserWindow extends HTMLElement {
 	max-width: 12px;
 	border-radius: 12px;
 	background-color: #e5e5e5;
+}
+.hed.windows .controls {
+	display: inline-block;
+	height: 14px;
+	width: 58px;
+	background-color: transparent !important;
 }
 :host(:not([${BrowserWindow.attrs.grayscale}])) .circle-red {
 	background-color: #FF5F56;
@@ -97,43 +107,56 @@ class BrowserWindow extends HTMLElement {
 }
 `;
 
-	connectedCallback() {
-		if(!("replaceSync" in CSSStyleSheet.prototype) || this.shadowRoot) {
-			return;
-		}
+  connectedCallback() {
+    if (!("replaceSync" in CSSStyleSheet.prototype) || this.shadowRoot) {
+      return;
+    }
 
-		let shadowroot = this.attachShadow({ mode: "open" });
+    let shadowroot = this.attachShadow({ mode: "open" });
 
-		let sheet = new CSSStyleSheet();
-		sheet.replaceSync(BrowserWindow.style);
-		shadowroot.adoptedStyleSheets = [sheet];
+    let sheet = new CSSStyleSheet();
+    sheet.replaceSync(BrowserWindow.style);
+    shadowroot.adoptedStyleSheets = [sheet];
 
-		let url = this.getAttribute(BrowserWindow.attrs.url) || "";
-		let urlObj = url ? new URL(url) : {};
-		let displayUrl = urlObj.hostname || "";
+    let url = this.getAttribute(BrowserWindow.attrs.url) || "";
+    let urlObj = url ? new URL(url) : {};
+    let displayUrl = urlObj.hostname || "";
 
-		let template = document.createElement("template");
+    let template = document.createElement("template");
 
-		let iconHtml = "";
-		if(this.hasAttribute(BrowserWindow.attrs.icon)) {
-			let iconUrl = `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(urlObj.origin || "")}/`;
-			iconHtml = `<img src="${iconUrl}" alt="Favicon for ${urlObj.origin}" class="title-icon" width="32" height="32" loading="lazy" decoding="async">`
-		}
+    let iconHtml = "";
+    if (this.hasAttribute(BrowserWindow.attrs.icon)) {
+      let iconUrl = `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(
+        urlObj.origin || ""
+      )}/`;
+      iconHtml = `<img src="${iconUrl}" alt="Favicon for ${urlObj.origin}" class="title-icon" width="32" height="32" loading="lazy" decoding="async">`;
+    }
+    let os = this.getAttribute(BrowserWindow.attrs.os) || "osx";
 
-		template.innerHTML = `<div class="window">
-		<div class="hed">
-			<div class="circle circle-red"></div>
+    template.innerHTML = `<div class="window">
+		<div class="hed ${os}">
+			${
+        os === "windows"
+          ? `<div class="controls">
+		  <svg width="58" height="14" viewBox="0 0 58 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7H11" stroke="#878787" stroke-linecap="round" stroke-linejoin="round"></path><path d="M35 1H25C24.4477 1 24 1.44772 24 2V12C24 12.5523 24.4477 13 25 13H35C35.5523 13 36 12.5523 36 12V2C36 1.44772 35.5523 1 35 1Z" stroke="#878787"></path><path d="M47 2L57 12" stroke="#878787" stroke-linecap="round" stroke-linejoin="round"></path><path d="M47 12L57 2" stroke="#878787" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+		  </div>`
+          : `<div class="circle circle-red"></div>
 			<div class="circle circle-yellow"></div>
-			<div class="circle circle-green"></div>
-			${url ? `<a href="${url}" class="title">${iconHtml}<span class="title-text">${displayUrl}</span></a>` : ""}
+			<div class="circle circle-green"></div>`
+      }
+			${
+        url
+          ? `<a href="${url}" class="title">${iconHtml}<span class="title-text">${displayUrl}</span></a>`
+          : ""
+      }
 		</div>
 		<div class="main"><slot></slot></div>
 	</div>`;
 
-		shadowroot.appendChild(template.content.cloneNode(true));
-	}
+    shadowroot.appendChild(template.content.cloneNode(true));
+  }
 }
 
-if("customElements" in window) {
-	customElements.define(BrowserWindow.tagName, BrowserWindow);
+if ("customElements" in window) {
+  customElements.define(BrowserWindow.tagName, BrowserWindow);
 }

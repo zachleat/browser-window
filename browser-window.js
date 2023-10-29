@@ -99,7 +99,7 @@ class BrowserWindow extends HTMLElement {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-::slotted(img),
+::slotted(img[slot="icon"]),
 .title-icon {
 	width: 1.2em;
 	height: 1.2em;

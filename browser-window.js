@@ -20,6 +20,8 @@ class BrowserWindow extends HTMLElement {
 	min-width: 100px;
 	border-radius: .5em;
 	border: 1px solid rgba(0,0,0,.1);
+	background: var(--bw-background);
+	color: var(--bw-foreground);
 }
 :host([${BrowserWindow.attrs.shadow}]) .window {
 	/* via https://www.joshwcomeau.com/shadow-palette/ */

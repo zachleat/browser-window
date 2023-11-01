@@ -16,6 +16,14 @@
 			flex-grow: 1;
 			flex-basis: 20em;
 		}
+		.demo-bg-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-image: url(public/wallpaper.jpg);
+			background-size: cover;
+			padding: 3em;
+		}
 		img {
 			max-width: 100%;
 			height: auto;
@@ -40,13 +48,16 @@
 					This is a test.
 				</browser-window>
 				<browser-window os="windows">
-					Use Windows-style buttons.
+					This one uses Windows-style buttons.
 				</browser-window>
 				<browser-window shadow>
 					This one has a big ’ol shadow.
 				</browser-window>
 				<browser-window shadow style="--bw-shadow-hsl: 150deg 30% 60%;">
 					This one has different shadow color.
+				</browser-window>
+				<browser-window style="--bw-background: #333; --bw-foreground: #fff;">
+					This one has themed colors.
 				</browser-window>
 				<browser-window flush>
 					<div style="background: #eee; padding: .5em;">This content is flush to the window</div>
@@ -84,6 +95,11 @@
 					<p>This one has an iframe.</p>
 					<browser-window url="https://example.com/" flush>
 						<iframe src="https://example.com/" sandbox scrolling="no" style="pointer-events: none; width: 100%; height: 200px; border: none"></iframe>
+					</browser-window>
+				</div>
+				<div class="demo-bg-container">
+					<browser-window style="--bw-background: rgba(255,255,255,0.9);">
+						This one has a background image container.
 					</browser-window>
 				</div>
 			</div>

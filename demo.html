@@ -53,9 +53,12 @@
 				<browser-window shadow>
 					This one has a big ’ol shadow.
 				</browser-window>
-				<browser-window shadow style="--bw-shadow-hsl: 150deg 30% 60%;">
-					This one has different shadow color.
-				</browser-window>
+				<!-- Make sure shadow inherits through -->
+				<div style="--bw-shadow-hsl: 150deg 30% 60%;">
+					<browser-window shadow>
+						This one has different shadow color.
+					</browser-window>
+				</div>
 				<browser-window style="--bw-background: #333; --bw-foreground: #fff;">
 					This one has themed colors.
 				</browser-window>

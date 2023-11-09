@@ -12,16 +12,42 @@ class BrowserWindow extends HTMLElement {
 
 	static style = `
 :host {
+	--bw-internal-bg: var(--bw-background, transparent);
+	--bw-internal-fg: var(--bw-foreground, inherit);
 	--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 75%);
+
+	--bw-internal-title-bg: #d7d7d7;
+	--bw-internal-title-fg: #000;
+
+	--bw-internal-circle-1: var(--bw-internal-circle, var(--bw-circle-1, var(--bw-circle, #FF5F56)));
+	--bw-internal-circle-2: var(--bw-internal-circle, var(--bw-circle-2, var(--bw-circle, #FFBD2E)));
+	--bw-internal-circle-3: var(--bw-internal-circle, var(--bw-circle-3, var(--bw-circle, #27C93F)));
 }
+:host([${BrowserWindow.attrs.grayscale}]) {
+	--bw-internal-circle: #e5e5e5;
+}
+
+@media (prefers-color-scheme: dark) {
+	:host {
+		--bw-internal-bg: var(--bw-background, #33373f);
+		--bw-internal-fg: var(--bw-foreground, #fff);
+		--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 25%);
+		--bw-internal-title-bg: #40444c;
+		--bw-internal-title-fg: #fff;
+	}
+	:host([${BrowserWindow.attrs.grayscale}]) {
+		--bw-internal-circle: #49505e;
+	}
+}
+
 .window {
 	display: flex;
 	flex-direction: column;
 	min-width: 100px;
 	border-radius: .5em;
 	border: 1px solid rgba(0,0,0,.1);
-	background: var(--bw-background);
-	color: var(--bw-foreground);
+	background: var(--bw-internal-bg);
+	color: var(--bw-internal-fg);
 }
 :host([${BrowserWindow.attrs.shadow}]) .window {
 	/* via https://www.joshwcomeau.com/shadow-palette/ */
@@ -54,14 +80,14 @@ class BrowserWindow extends HTMLElement {
 	width: 58px;
 	background-color: transparent !important;
 }
-:host(:not([${BrowserWindow.attrs.grayscale}])) .circle-red {
-	background-color: #FF5F56;
+:host .circle:nth-child(1) {
+	background-color: var(--bw-internal-circle-1);
 }
-:host(:not([${BrowserWindow.attrs.grayscale}])) .circle-yellow {
-	background-color: #FFBD2E;
+:host .circle:nth-child(2) {
+	background-color: var(--bw-internal-circle-2);
 }
-:host(:not([${BrowserWindow.attrs.grayscale}])) .circle-green {
-	background-color: #27C93F;
+:host .circle:nth-child(3) {
+	background-color: var(--bw-internal-circle-3);
 }
 .main {
 	padding: .5em;
@@ -83,7 +109,7 @@ class BrowserWindow extends HTMLElement {
 	text-align: center;
 	font-family: system-ui;
 	font-size: 0.8125em; /* 13px /16 */
-	background: #d7d7d7;
+	background: var(--bw-internal-title-bg);
 	border-radius: 0.3333333333333em; /* 3px /9 */
 	margin: -4px 1em -4px 1em;
 	text-decoration: none;
@@ -93,7 +119,7 @@ class BrowserWindow extends HTMLElement {
 }
 .title,
 .title:visited {
-	color: #000;
+	color: var(--bw-internal-title-fg);
 }
 .title-text {
 	display: inline-block;
@@ -143,9 +169,9 @@ class BrowserWindow extends HTMLElement {
 			${
 				os === "windows"
 					? `<div class="controls">${windowsIcons}</div>`
-					: `<div class="circle circle-red"></div>
-						<div class="circle circle-yellow"></div>
-						<div class="circle circle-green"></div>`
+					: `<div class="circle"></div>
+						<div class="circle"></div>
+						<div class="circle"></div>`
 			}
 			${
 				url

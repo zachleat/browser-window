@@ -6,6 +6,23 @@
 		<meta name="description" content="">
 		<title>Browser Window web component</title>
 		<style>
+		@media (prefers-color-scheme: dark) {
+			body {
+				background-color: #222;
+				color: #eee;
+			}
+		}
+		a[href] {
+			color: inherit;
+		}
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+		p:first-child {
+			margin-top: 0;
+		}
+
 		.demo-layout {
 			display: flex;
 			flex-wrap: wrap;
@@ -23,13 +40,6 @@
 			background-image: url(public/wallpaper.jpg);
 			background-size: cover;
 			padding: 3em;
-		}
-		img {
-			max-width: 100%;
-			height: auto;
-		}
-		p:first-child {
-			margin-top: 0;
 		}
 		</style>
 		<script type="module" src="./browser-window.js"></script>
@@ -63,7 +73,7 @@
 					This one has themed colors.
 				</browser-window>
 				<browser-window flush>
-					<div style="background: #eee; padding: .5em;">This content is flush to the window</div>
+					<div style="background: #eee; color: #000; padding: .5em;">This content is flush to the window</div>
 				</browser-window>
 				<browser-window grayscale>
 					This one has grayscale buttons.
@@ -101,7 +111,7 @@
 					</browser-window>
 				</div>
 				<div class="demo-bg-container">
-					<browser-window style="--bw-background: rgba(255,255,255,0.9);">
+					<browser-window style="--bw-background: rgba(255,255,255,0.9);--bw-foreground: #000;">
 						This one has a background image container.
 					</browser-window>
 				</div>

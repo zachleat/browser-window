@@ -63,18 +63,19 @@ class BrowserWindow extends HTMLElement {
 }
 .hed {
 	display: flex;
-	gap: 6px;
-	padding: 9px;
+	align-items: center;
+	gap: 0.375em; /* 6px /16 */
+	padding: 0.5625em; /* 9px /16 */
 }
 .hed.windows {
 	flex-direction: row-reverse;
 }
 .circle {
 	display: inline-block;
-	height: 12px;
-	min-width: 12px;
-	max-width: 12px;
-	border-radius: 12px;
+	height: .75em;
+	min-width: .75em;
+	max-width: .75em;
+	border-radius: .75em;
 	background-color: #e5e5e5;
 }
 .hed.windows .controls {

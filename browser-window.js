@@ -15,6 +15,7 @@ class BrowserWindow extends HTMLElement {
 :host {
 	--bw-internal-bg: var(--bw-background, transparent);
 	--bw-internal-fg: var(--bw-foreground, inherit);
+	--bw-internal-border: var(--bw-border, 1px solid rgba(0,0,0,.1));
 	--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 75%);
 
 	--bw-internal-title-bg: #d7d7d7;
@@ -48,7 +49,7 @@ class BrowserWindow extends HTMLElement {
 	flex-direction: column;
 	min-width: 100px;
 	border-radius: .5em;
-	border: 1px solid rgba(0,0,0,.1);
+	border: var(--bw-internal-border);
 	background: var(--bw-internal-bg);
 	color: var(--bw-internal-fg);
 }

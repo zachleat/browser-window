@@ -1,6 +1,6 @@
 {
   "name": "@zachleat/browser-window",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Used in demos as a way to fake a Safari-esque web browser window.",
   "main": "browser-window.js",
   "scripts": {

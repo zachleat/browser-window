@@ -8,6 +8,7 @@ class BrowserWindow extends HTMLElement {
 		shadow: "shadow",
 		grayscale: "grayscale",
 		os: "os",
+		mode: "mode", // values: "dark", "light"
 	};
 
 	static style = `
@@ -23,21 +24,23 @@ class BrowserWindow extends HTMLElement {
 	--bw-internal-circle-2: var(--bw-internal-circle, var(--bw-circle-2, var(--bw-circle, #FFBD2E)));
 	--bw-internal-circle-3: var(--bw-internal-circle, var(--bw-circle-3, var(--bw-circle, #27C93F)));
 }
+:host([${BrowserWindow.attrs.mode}="light"]) {
+	--bw-internal-bg: var(--bw-background, #fff);
+	--bw-internal-fg: var(--bw-foreground, #000);
+}
+:host([${BrowserWindow.attrs.mode}="dark"]) {
+	--bw-internal-bg: var(--bw-background, #33373f);
+	--bw-internal-fg: var(--bw-foreground, #fff);
+	--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 25%);
+	--bw-internal-title-bg: #40444c;
+	--bw-internal-title-fg: #fff;
+}
+
 :host([${BrowserWindow.attrs.grayscale}]) {
 	--bw-internal-circle: #e5e5e5;
 }
-
-@media (prefers-color-scheme: dark) {
-	:host {
-		--bw-internal-bg: var(--bw-background, #33373f);
-		--bw-internal-fg: var(--bw-foreground, #fff);
-		--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 25%);
-		--bw-internal-title-bg: #40444c;
-		--bw-internal-title-fg: #fff;
-	}
-	:host([${BrowserWindow.attrs.grayscale}]) {
-		--bw-internal-circle: #49505e;
-	}
+:host([${BrowserWindow.attrs.mode}="dark"][${BrowserWindow.attrs.grayscale}]) {
+	--bw-internal-circle: #49505e;
 }
 
 .window {
@@ -136,6 +139,10 @@ class BrowserWindow extends HTMLElement {
 }
 `;
 
+	setMode(isDarkMode) {
+		this.setAttribute(BrowserWindow.attrs.mode, isDarkMode ? "dark" : "light");
+	}
+
 	connectedCallback() {
 		if (!("replaceSync" in CSSStyleSheet.prototype) || this.shadowRoot) {
 			return;
@@ -159,6 +166,15 @@ class BrowserWindow extends HTMLElement {
 			let iconAlt = `Favicon for ${urlObj.origin}`;
 
 			iconHtml = `<img src="${iconUrl}" alt="${iconAlt}" width="32" height="32" loading="lazy" decoding="async" class="title-icon">`;
+		}
+
+		let prefersDarkMode = matchMedia("(prefers-color-scheme: dark)");
+		if(!this.hasAttribute(BrowserWindow.attrs.mode)) {
+			this.setMode(prefersDarkMode.matches);
+
+			prefersDarkMode.addListener(e => {
+				this.setMode(e.matches);
+      });
 		}
 
 		let os = this.getAttribute(BrowserWindow.attrs.os) || "osx";

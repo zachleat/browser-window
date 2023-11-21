@@ -141,6 +141,15 @@ class BrowserWindow extends HTMLElement {
 }
 `;
 
+	static isValidUrl(url) {
+		try {
+			new URL(url);
+			return true;
+		} catch(e) {
+			return false;
+		}
+	}
+
 	setMode(isDarkMode) {
 		this.setAttribute(BrowserWindow.attrs.mode, isDarkMode ? "dark" : "light");
 	}
@@ -157,7 +166,7 @@ class BrowserWindow extends HTMLElement {
 		shadowroot.adoptedStyleSheets = [sheet];
 
 		let url = this.getAttribute(BrowserWindow.attrs.url) || "";
-		let urlObj = url ? new URL(url) : {};
+		let urlObj = url && BrowserWindow.isValidUrl(url) ? new URL(url) : {};
 		let displayUrl = urlObj.hostname || "";
 
 		let template = document.createElement("template");

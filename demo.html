@@ -69,8 +69,11 @@
 						This one has different shadow color.
 					</browser-window>
 				</div>
-				<browser-window style="--bw-background: #5a0000; --bw-foreground: #fff;">
-					This one has themed colors.
+				<browser-window mode="light" style="--bw-background: #ffcdcd;" url="https://example.com/">
+					This one has a themed color (light).
+				</browser-window>
+				<browser-window mode="dark" style="--bw-background: #5a0000;" url="https://example.com/">
+					This one has a themed color (dark).
 				</browser-window>
 				<browser-window flush>
 					<div style="background: #eee; color: #000; padding: .5em;">This content is flush to the window</div>
@@ -80,6 +83,9 @@
 				</browser-window>
 				<browser-window url="https://www.zachleat.com/web/">
 					This one has a URL bar.
+				</browser-window>
+				<browser-window mode="dark" url="" icon="" shadow="" flush="">
+					Testing
 				</browser-window>
 				<browser-window url="exalskjdkl">
 					This one has an invalid URL but still renders.

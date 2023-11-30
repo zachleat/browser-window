@@ -18,7 +18,7 @@ class BrowserWindow extends HTMLElement {
 	--bw-internal-border: var(--bw-border, 1px solid rgba(0,0,0,.1));
 	--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 75%);
 
-	--bw-internal-title-bg: #d7d7d7;
+	--bw-internal-title-bg: rgba(0,0,0,.155);
 	--bw-internal-title-fg: #000;
 
 	--bw-internal-circle-1: var(--bw-internal-circle, var(--bw-circle-1, var(--bw-circle, #FF5F56)));
@@ -33,7 +33,7 @@ class BrowserWindow extends HTMLElement {
 	--bw-internal-bg: var(--bw-background, #33373f);
 	--bw-internal-fg: var(--bw-foreground, #fff);
 	--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 25%);
-	--bw-internal-title-bg: #40444c;
+	--bw-internal-title-bg: rgba(255,255,255,.063);
 	--bw-internal-title-fg: #fff;
 }
 

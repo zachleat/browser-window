@@ -183,7 +183,7 @@ class BrowserWindow extends HTMLElement {
 		if(!this.hasAttribute(BrowserWindow.attrs.mode)) {
 			this.setMode(prefersDarkMode.matches);
 
-			prefersDarkMode.addEventListener('change', e => {
+			prefersDarkMode.addEventListener("change", e => {
 				this.setMode(e.matches);
       });
 		}

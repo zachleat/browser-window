@@ -81,7 +81,7 @@
 				<browser-window grayscale>
 					This one has grayscale buttons.
 				</browser-window>
-				<browser-window url="https://www.zachleat.com/web/">
+				<browser-window url="https://www.zachleat.com/web/?q=1#hash">
 					This one has a URL bar.
 				</browser-window>
 				<browser-window mode="dark" url="" icon="" shadow="" flush="">
@@ -99,6 +99,18 @@
 				</browser-window>
 				<browser-window url="https://www.zachleat.com/web/" icon>
 					This one has a URL bar with icon.
+				</browser-window>
+				<browser-window url="http://www.zachleat.com/web/?q=1#hash" url-mode="hostname-only" icon>
+					This one only shows the hostname in the URL bar.
+				</browser-window>
+				<browser-window url="http://www.zachleat.com/web/" icon>
+					This one shows http:// because eww, gross.
+				</browser-window>
+				<browser-window url="https://www.zachleat.com/web/really-long-url-that-should-be-ellipsesed-really-long-url-that-should-be-ellipsesed-really-long-url-that-should-be-ellipsesed-really-long-url-that-should-be-ellipsesed" icon>
+					This one has a really long URL bar with icon (but respects the boundaries of container or viewport).
+				</browser-window>
+				<browser-window url="https://www.zachleat.com/web/really-long-url-that-should-be-ellipsesed-really-long-url-that-should-be-ellipsesed-really-long-url-that-should-be-ellipsesed-really-long-url-that-should-be-ellipsesed" icon style="max-width: 20em">
+					This one has a really long URL bar with icon (inline styled to <code>max-width: 20em</code>).
 				</browser-window>
 				<browser-window mode="light" url="https://www.zachleat.com/web/" icon>
 					This one forces light mode.
@@ -133,7 +145,7 @@
 				</div>
 				<div class="demo-bg-container">
 					<browser-window style="--bw-background: rgba(255,255,255,0.9);--bw-foreground: #000;">
-						This one has a background image container.
+						This one has a background image on a parent.
 					</browser-window>
 				</div>
 				<browser-window mode="dark" flush style="--bw-border: none;">

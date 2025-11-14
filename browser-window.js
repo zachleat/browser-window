@@ -3,6 +3,7 @@ class BrowserWindow extends HTMLElement {
 
 	static attrs = {
 		url: "url",
+		urlMode: "url-mode",
 		icon: "icon",
 		flush: "flush",
 		shadow: "shadow",
@@ -131,6 +132,7 @@ class BrowserWindow extends HTMLElement {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	max-width: calc(100vw - 13em);
 }
 ::slotted(img[slot="icon"]),
 .title-icon {
@@ -154,6 +156,19 @@ class BrowserWindow extends HTMLElement {
 		this.setAttribute(BrowserWindow.attrs.mode, isDarkMode ? "dark" : "light");
 	}
 
+	static getDisplayUrl(urlObj, mode) {
+		if(mode === "hostname-only") {
+			return urlObj.hostname; // previous behavior
+		}
+		if(urlObj?.href?.endsWith(urlObj.hostname + "/")) {
+			return urlObj.hostname;
+		}
+		if(urlObj?.href?.startsWith("https://")) {
+			return urlObj.href.slice("https://".length);
+		}
+		return urlObj.href || urlObj.hostname || "";
+	}
+
 	connectedCallback() {
 		if (!("replaceSync" in CSSStyleSheet.prototype) || this.shadowRoot) {
 			return;
@@ -167,7 +182,7 @@ class BrowserWindow extends HTMLElement {
 
 		let url = this.getAttribute(BrowserWindow.attrs.url) || "";
 		let urlObj = url && BrowserWindow.isValidUrl(url) ? new URL(url) : {};
-		let displayUrl = urlObj.hostname || "";
+		let displayUrl = BrowserWindow.getDisplayUrl(urlObj, this.getAttribute(BrowserWindow.attrs.urlMode));
 
 		let template = document.createElement("template");
 

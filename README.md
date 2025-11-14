@@ -14,3 +14,7 @@ Via [`npm`](https://www.npmjs.com/package/@zachleat/browser-window) or download 
 ```sh
 npm install @zachleat/browser-window
 ```
+
+## Changelog
+
+- `v2.0.0` URL bar now shows the full url by default (including pathname, searchParams, et al). Use `url-mode="hostname-only"` to swap back to previous behavior.

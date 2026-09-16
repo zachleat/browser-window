@@ -17,4 +17,5 @@ npm install @zachleat/browser-window
 
 ## Changelog
 
+- `v3.0.0` swaps to use `light-dark` and `color-scheme` for easier light/dark mode configuration! This has browser support implications!
 - `v2.0.0` URL bar now shows the full url by default (including pathname, searchParams, et al). Use `url-mode="hostname-only"` to swap back to previous behavior.

@@ -3,6 +3,9 @@
   "version": "2.0.1",
   "description": "Used in demos as a way to fake a Safari-esque web browser window.",
   "main": "browser-window.js",
+  "files": [
+    "browser-window.js"
+  ],
   "scripts": {
     "start": "npx http-server ."
   },

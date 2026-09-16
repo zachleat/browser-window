@@ -33,7 +33,7 @@ class BrowserWindow extends HTMLElement {
 :host([${BrowserWindow.attrs.mode}="dark"]) {
 	--bw-internal-bg: var(--bw-background, #33373f);
 	--bw-internal-fg: var(--bw-foreground, #fff);
-	--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 25%);
+	--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 0%);
 	--bw-internal-title-bg: rgba(255,255,255,.063);
 	--bw-internal-title-fg: #fff;
 }

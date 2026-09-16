@@ -7,6 +7,9 @@
 		<title>Browser Window web component</title>
 		<style>
 		/* Demo styles */
+		:root {
+			color-scheme: light dark;
+		}
 		body {
 			font-family: system-ui, sans-serif;
 			margin: 0;
@@ -40,6 +43,17 @@
 		.demo-layout > * {
 			flex-grow: 1;
 			flex-basis: 20em;
+		}
+		[data-theme="light"] {
+			color-scheme: light;
+		}
+		[data-theme="dark"] {
+			color-scheme: dark;
+		}
+		.demo-theme-parent {
+			background-color: light-dark(#eee, #111);
+			color: light-dark(#000, #fff);
+			padding: 1em;
 		}
 		.demo-bg-container {
 			display: flex;
@@ -147,6 +161,12 @@
 				<browser-window mode="dark" url="https://www.zachleat.com/web/" icon>
 					This one forces dark mode.
 				</browser-window>
+				<div class="demo-theme-parent" data-theme="dark">
+					<p><button type="button" onclick="let el = this.closest('[data-theme]'); el.dataset.theme = el.dataset.theme === 'dark' ? 'light' : 'dark';">Toggle parent <code>data-theme</code></button></p>
+					<browser-window url="https://www.zachleat.com/web/" icon shadow>
+						This one inherits <code>color-scheme</code> from a parent <code>data-theme</code> attribute.
+					</browser-window>
+				</div>
 				<browser-window url="https://www.zachleat.com/web/" icon style="font-size: 12px">
 					This one scales with the parent font size (smaller).
 				</browser-window>

@@ -14,35 +14,27 @@ class BrowserWindow extends HTMLElement {
 
 	static style = `
 :host {
-	--bw-internal-bg: var(--bw-background, transparent);
-	--bw-internal-fg: var(--bw-foreground, inherit);
+	--bw-internal-bg: var(--bw-background, light-dark(#fff, #33373f));
+	--bw-internal-fg: var(--bw-foreground, light-dark(#000, #fff));
 	--bw-internal-border: var(--bw-border, 1px solid rgba(0,0,0,.1));
-	--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 75%);
+	--bw-internal-shadow: light-dark(hsl(var(--bw-shadow-hsl, 0deg 0% 75%)), hsl(var(--bw-shadow-hsl, 0deg 0% 0%)));
 
-	--bw-internal-title-bg: rgba(0,0,0,.155);
-	--bw-internal-title-fg: #000;
+	--bw-internal-title-bg: light-dark(rgba(0,0,0,.155), rgba(255,255,255,.063));
+	--bw-internal-title-fg: light-dark(#000, #fff);
 
 	--bw-internal-circle-1: var(--bw-internal-circle, var(--bw-circle-1, var(--bw-circle, #FF5F56)));
 	--bw-internal-circle-2: var(--bw-internal-circle, var(--bw-circle-2, var(--bw-circle, #FFBD2E)));
 	--bw-internal-circle-3: var(--bw-internal-circle, var(--bw-circle-3, var(--bw-circle, #27C93F)));
 }
 :host([${BrowserWindow.attrs.mode}="light"]) {
-	--bw-internal-bg: var(--bw-background, #fff);
-	--bw-internal-fg: var(--bw-foreground, #000);
+	color-scheme: light;
 }
 :host([${BrowserWindow.attrs.mode}="dark"]) {
-	--bw-internal-bg: var(--bw-background, #33373f);
-	--bw-internal-fg: var(--bw-foreground, #fff);
-	--bw-internal-shadow-hsl: var(--bw-shadow-hsl, 0deg 0% 0%);
-	--bw-internal-title-bg: rgba(255,255,255,.063);
-	--bw-internal-title-fg: #fff;
+	color-scheme: dark;
 }
 
 :host([${BrowserWindow.attrs.grayscale}]) {
-	--bw-internal-circle: #e5e5e5;
-}
-:host([${BrowserWindow.attrs.mode}="dark"][${BrowserWindow.attrs.grayscale}]) {
-	--bw-internal-circle: #49505e;
+	--bw-internal-circle: light-dark(#e5e5e5, #49505e);
 }
 
 .window {
@@ -56,12 +48,12 @@ class BrowserWindow extends HTMLElement {
 }
 :host([${BrowserWindow.attrs.shadow}]) .window {
 	/* via https://www.joshwcomeau.com/shadow-palette/ */
-	box-shadow: 0px 0.3px 0.5px hsl(var(--bw-internal-shadow-hsl) / 0),
-		0.1px 2.4px 3.6px hsl(var(--bw-internal-shadow-hsl) / 0.07),
-		0.1px 4.3px 6.5px hsl(var(--bw-internal-shadow-hsl) / 0.14),
-		0.2px 6.7px 10.1px hsl(var(--bw-internal-shadow-hsl) / 0.22),
-		0.3px 10.6px 15.9px hsl(var(--bw-internal-shadow-hsl) / 0.29),
-		0.5px 16.5px 24.8px hsl(var(--bw-internal-shadow-hsl) / 0.36);
+	box-shadow: 0px 0.3px 0.5px color-mix(in srgb, var(--bw-internal-shadow) 0%, transparent),
+		0.1px 2.4px 3.6px color-mix(in srgb, var(--bw-internal-shadow) 4%, transparent),
+		0.1px 4.3px 6.5px color-mix(in srgb, var(--bw-internal-shadow) 7%, transparent),
+		0.2px 6.7px 10.1px color-mix(in srgb, var(--bw-internal-shadow) 11%, transparent),
+		0.3px 10.6px 15.9px color-mix(in srgb, var(--bw-internal-shadow) 15%, transparent),
+		0.5px 16.5px 24.8px color-mix(in srgb, var(--bw-internal-shadow) 18%, transparent);
 }
 .hed {
 	display: flex;
@@ -152,10 +144,6 @@ class BrowserWindow extends HTMLElement {
 		}
 	}
 
-	setMode(isDarkMode) {
-		this.setAttribute(BrowserWindow.attrs.mode, isDarkMode ? "dark" : "light");
-	}
-
 	static getDisplayUrl(urlObj, mode) {
 		if(mode === "hostname-only") {
 			return urlObj.hostname; // previous behavior
@@ -192,15 +180,6 @@ class BrowserWindow extends HTMLElement {
 			let iconAlt = `Favicon for ${urlObj.origin}`;
 
 			iconHtml = `<img src="${iconUrl}" alt="${iconAlt}" width="32" height="32" loading="lazy" decoding="async" class="title-icon">`;
-		}
-
-		let prefersDarkMode = matchMedia("(prefers-color-scheme: dark)");
-		if(!this.hasAttribute(BrowserWindow.attrs.mode)) {
-			this.setMode(prefersDarkMode.matches);
-
-			prefersDarkMode.addEventListener("change", e => {
-				this.setMode(e.matches);
-      });
 		}
 
 		let os = this.getAttribute(BrowserWindow.attrs.os) || "osx";

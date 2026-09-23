@@ -118,6 +118,9 @@
 				<browser-window mode="dark" style="--bw-background: #5a0000;" url="https://example.com/">
 					This one has a themed color (dark).
 				</browser-window>
+				<browser-window mode="dark" style="--bw-background: oklch(82.532% 0.10901 52.931); --bw-foreground: #000; --bw-title-background: rgba(0,0,0,.155);" url="https://example.com/">
+					This one has a light themed color with a dark foreground (dark).
+				</browser-window>
 				<browser-window flush>
 					<div style="background: #eee; color: #000; padding: .5em;">This content is flush to the window</div>
 				</browser-window>
@@ -165,6 +168,12 @@
 					<p><button type="button" onclick="let el = this.closest('[data-theme]'); el.dataset.theme = el.dataset.theme === 'dark' ? 'light' : 'dark';">Toggle parent <code>data-theme</code></button></p>
 					<browser-window url="https://www.zachleat.com/web/" icon shadow>
 						This one inherits <code>color-scheme</code> from a parent <code>data-theme</code> attribute.
+					</browser-window>
+				</div>
+				<div class="demo-theme-parent" data-theme="dark">
+					<p><button type="button" onclick="let el = this.closest('[data-theme]'); el.dataset.theme = el.dataset.theme === 'dark' ? 'light' : 'dark';">Toggle parent <code>data-theme</code></button></p>
+					<browser-window url="https://www.zachleat.com/web/" icon style="--bw-background: oklch(82.532% 0.10901 52.931); --bw-foreground: #000; --bw-title-background: rgba(0,0,0,.155);">
+						This one keeps a dark foreground on a light themed color in both modes.
 					</browser-window>
 				</div>
 				<browser-window url="https://www.zachleat.com/web/" icon style="font-size: 12px">

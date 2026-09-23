@@ -19,8 +19,8 @@ class BrowserWindow extends HTMLElement {
 	--bw-internal-border: var(--bw-border, 1px solid rgba(0,0,0,.1));
 	--bw-internal-shadow: light-dark(hsl(var(--bw-shadow-hsl, 0deg 0% 75%)), hsl(var(--bw-shadow-hsl, 0deg 0% 0%)));
 
-	--bw-internal-title-bg: light-dark(rgba(0,0,0,.155), rgba(255,255,255,.063));
-	--bw-internal-title-fg: light-dark(#000, #fff);
+	--bw-internal-title-bg: var(--bw-title-background, light-dark(rgba(0,0,0,.155), rgba(255,255,255,.063)));
+	--bw-internal-title-fg: var(--bw-title-foreground, var(--bw-foreground, light-dark(#000, #fff)));
 
 	--bw-internal-circle-1: var(--bw-internal-circle, var(--bw-circle-1, var(--bw-circle, #FF5F56)));
 	--bw-internal-circle-2: var(--bw-internal-circle, var(--bw-circle-2, var(--bw-circle, #FFBD2E)));

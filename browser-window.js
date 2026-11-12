@@ -145,6 +145,13 @@ class BrowserWindow extends HTMLElement {
 }
 `;
 
+	// Reserved TLD, so it never collides with a real origin.
+	static placeholderOrigin = "https://browser-window.invalid";
+
+	static isPathOnly(url) {
+		return url.startsWith("/") && !url.startsWith("//");
+	}
+
 	static isValidUrl(url) {
 		try {
 			new URL(url);
@@ -155,6 +162,9 @@ class BrowserWindow extends HTMLElement {
 	}
 
 	static getDisplayUrl(urlObj, mode) {
+		if(urlObj.origin === BrowserWindow.placeholderOrigin) {
+			return urlObj.pathname + urlObj.search + urlObj.hash;
+		}
 		if(mode === "hostname-only") {
 			return urlObj.hostname; // previous behavior
 		}
@@ -179,13 +189,19 @@ class BrowserWindow extends HTMLElement {
 		shadowroot.adoptedStyleSheets = [sheet];
 
 		let url = this.getAttribute(BrowserWindow.attrs.url) || "";
-		let urlObj = url && BrowserWindow.isValidUrl(url) ? new URL(url) : {};
+		let urlObj = {};
+		if(url && BrowserWindow.isPathOnly(url)) {
+			urlObj = new URL(url, BrowserWindow.placeholderOrigin);
+		} else if(url && BrowserWindow.isValidUrl(url)) {
+			urlObj = new URL(url);
+		}
+		let hasOrigin = urlObj.origin && urlObj.origin !== BrowserWindow.placeholderOrigin;
 		let displayUrl = BrowserWindow.getDisplayUrl(urlObj, this.getAttribute(BrowserWindow.attrs.urlMode));
 
 		let template = document.createElement("template");
 
 		let iconHtml = "";
-		if (this.hasAttribute(BrowserWindow.attrs.icon)) {
+		if (this.hasAttribute(BrowserWindow.attrs.icon) && hasOrigin) {
 			let iconUrl = `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(urlObj.origin || "")}/`;
 			let iconAlt = `Favicon for ${urlObj.origin}`;
 

@@ -6,6 +6,7 @@ class BrowserWindow extends HTMLElement {
 		urlMode: "url-mode",
 		icon: "icon",
 		flush: "flush",
+		fill: "fill",
 		shadow: "shadow",
 		grayscale: "grayscale",
 		os: "os",
@@ -14,6 +15,7 @@ class BrowserWindow extends HTMLElement {
 
 	static style = `
 :host {
+	display: block;
 	--bw-internal-bg: var(--bw-background, light-dark(#fff, #33373f));
 	--bw-internal-fg: var(--bw-foreground, light-dark(#000, #fff));
 	--bw-internal-border: var(--bw-border, 1px solid rgba(0,0,0,.1));
@@ -45,6 +47,14 @@ class BrowserWindow extends HTMLElement {
 	border: var(--bw-internal-border);
 	background: var(--bw-internal-bg);
 	color: var(--bw-internal-fg);
+}
+/* Opt-in so stretched hosts in existing flex/grid layouts keep content-height windows. */
+:host([${BrowserWindow.attrs.fill}]) .window {
+	box-sizing: border-box;
+	block-size: 100%;
+}
+:host([${BrowserWindow.attrs.fill}]) .main {
+	flex-grow: 1;
 }
 :host([${BrowserWindow.attrs.shadow}]) .window {
 	/* via https://www.joshwcomeau.com/shadow-palette/ */

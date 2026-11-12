@@ -6,9 +6,6 @@
   "files": [
     "browser-window.js"
   ],
-  "scripts": {
-    "start": "npx http-server ."
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zachleat/browser-window.git"
